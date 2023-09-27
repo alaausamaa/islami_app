@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:islami_app/hades/hadeth_view.dart';
 import 'package:islami_app/quran/quran_view.dart';
 import 'package:islami_app/radio/radio_view.dart';
@@ -34,7 +35,7 @@ class _HomeLayout extends State<HomeLayout> {
       Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          title: const Text("اسلامي"),
+          title: Text(AppLocalizations.of(context)!.islami),
         ),
         bottomNavigationBar: BottomNavigationBar(
             currentIndex: index,
@@ -43,17 +44,18 @@ class _HomeLayout extends State<HomeLayout> {
               setState(() {});
             },
             backgroundColor: Color(0xFFB7935F),
-            items: const [
+            items: [
               BottomNavigationBarItem(
-                  backgroundColor: Color(0xFFB7935F),
-                  icon: ImageIcon(AssetImage("assets/images/moshaf.png")),
-                  label: "القران"),
+                backgroundColor: Color(0xFFB7935F),
+                icon: ImageIcon(AssetImage("assets/images/moshaf.png")),
+                label: AppLocalizations.of(context)!.quran,
+              ),
               BottomNavigationBarItem(
                   backgroundColor: Color(0xFFB7935F),
                   icon: ImageIcon(
                     AssetImage("assets/images/quran.png"),
                   ),
-                  label: "الاحاديث"),
+                  label: AppLocalizations.of(context)!.hadeth),
               BottomNavigationBarItem(
                   backgroundColor: Color(0xFFB7935F),
                   icon: ImageIcon(
@@ -61,15 +63,15 @@ class _HomeLayout extends State<HomeLayout> {
                       "assets/images/sebha.png",
                     ),
                   ),
-                  label: "التسبيح"),
+                  label: AppLocalizations.of(context)!.tasbeh),
               BottomNavigationBarItem(
                   backgroundColor: Color(0xFFB7935F),
                   icon: ImageIcon(AssetImage("assets/images/radio.png")),
-                  label: "الراديو"),
+                  label: AppLocalizations.of(context)!.radio),
               BottomNavigationBarItem(
                   backgroundColor: Color(0xFFB7935F),
                   icon: Icon(Icons.settings),
-                  label: "الاعدادات"),
+                  label: AppLocalizations.of(context)!.setting),
             ]),
         body: screens[index],
       ),

@@ -16,7 +16,7 @@ class _HadethViewState extends State<HadethView> {
     var theme = Theme.of(context);
     return Column(
       children: [
-        Image.asset("assets/images/quransora.png"),
+        Image.asset("assets/images/hadethsora.png"),
         Divider(
           thickness: 1.5,
           endIndent: 10,
