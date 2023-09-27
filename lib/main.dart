@@ -21,7 +21,7 @@ class MyApplication extends StatelessWidget {
         routes: {
           SplashScreen.routeName: (context) => const SplashScreen(),
           HomeLayout.routeName: (context) => HomeLayout(),
-          QuranDetails.routeName: (context) => const QuranDetails()
+          QuranDetails.routName: (context) => QuranDetails()
         });
   }
 }
