@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:islami_app/hades/hadeth_details.dart';
 
-class HadethView extends StatelessWidget {
-  const HadethView({super.key});
+class HadethView extends StatefulWidget {
+  @override
+  State<HadethView> createState() => _HadethViewState();
+}
+
+class _HadethViewState extends State<HadethView> {
+  List<HadethContent> allHadethContent = [];
 
   @override
   Widget build(BuildContext context) {
+    if (allHadethContent.isEmpty) readFile();
     var theme = Theme.of(context);
     return Column(
       children: [
@@ -28,10 +36,55 @@ class HadethView extends StatelessWidget {
           height: 10,
         ),
         Expanded(
-          child: ListView.builder(
-              itemBuilder: (context, index) => Text("a;;"), itemCount: 18),
+          child: ListView.separated(
+            itemBuilder: (context, index) => GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, HadethDetails.routName,
+                      arguments: HadethContent(
+                          content: allHadethContent[index].content,
+                          title: allHadethContent[index].title));
+                },
+                child: Text(
+                  allHadethContent[index].title,
+                  textAlign: TextAlign.center,
+                )),
+            itemCount: allHadethContent.length,
+            separatorBuilder: (context, index) => Divider(
+              thickness: 1.5,
+              endIndent: 80,
+              indent: 80,
+              color: theme.primaryColor,
+              height: 10,
+            ),
+          ),
         )
       ],
     );
   }
+
+  readFile() async {
+    String text = await rootBundle.loadString("assets/files/ahadeth.txt");
+    List<String> allhadeth = text.split("#");
+    for (int i = 0; i < allhadeth.length; i++) {
+      String singleHadeth = allhadeth[i].trim();
+      int indexOfFirstLine = singleHadeth.indexOf("\n");
+      String title = singleHadeth.substring(0, indexOfFirstLine);
+      String content = singleHadeth.substring(indexOfFirstLine + 1);
+
+      HadethContent hadethContent =
+          HadethContent(title: title, content: content);
+
+      setState(() {
+        allHadethContent.add(hadethContent);
+      });
+    }
+  }
+}
+
+class HadethContent {
+  final String title;
+
+  final String content;
+
+  HadethContent({required this.content, required this.title});
 }
