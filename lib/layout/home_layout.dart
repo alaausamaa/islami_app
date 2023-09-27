@@ -5,57 +5,74 @@ import 'package:islami_app/radio/radio_view.dart';
 import 'package:islami_app/setting/setting_view.dart';
 import 'package:islami_app/tasbeh/tasbeh_view.dart';
 
-class HomeLayout extends StatelessWidget {
+class HomeLayout extends StatefulWidget {
   static const String routeName = "home_layout";
 
-  int selectedIndex = 0;
+  @override
+  State<StatefulWidget> createState() => _HomeLayout();
+}
 
+class _HomeLayout extends State<HomeLayout> {
   List<Widget> screens = [
-    QuranView(),
+    Quran(),
     HadethView(),
     TasbehView(),
     RadioView(),
     SettingView(),
   ];
 
-  HomeLayout({super.key});
+  int index = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(
-                "assets/images/bg3.png",
-              ),
-              fit: BoxFit.cover)),
-      child: Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(title: const Text("اسلامي")),
-          body: screens[selectedIndex],
-          bottomNavigationBar: BottomNavigationBar(
-              onTap: (int index) {
-                selectedIndex = index;
-              },
-              currentIndex: selectedIndex,
-              items: const [
-                BottomNavigationBarItem(
-                    icon: ImageIcon(AssetImage("assets/images/moshaf.png")),
-                    label: "القران"),
-                BottomNavigationBarItem(
-                    icon: ImageIcon(
-                      AssetImage("assets/images/quran.png"),
+    return Stack(children: [
+      Image.asset(
+        "assets/images/bg3.png",
+        width: double.infinity,
+        fit: BoxFit.cover,
+      ),
+      Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          title: const Text("اسلامي"),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+            currentIndex: index,
+            onTap: (value) {
+              index = value;
+              setState(() {});
+            },
+            backgroundColor: Color(0xFFB7935F),
+            items: const [
+              BottomNavigationBarItem(
+                  backgroundColor: Color(0xFFB7935F),
+                  icon: ImageIcon(AssetImage("assets/images/moshaf.png")),
+                  label: "القران"),
+              BottomNavigationBarItem(
+                  backgroundColor: Color(0xFFB7935F),
+                  icon: ImageIcon(
+                    AssetImage("assets/images/quran.png"),
+                  ),
+                  label: "الاحاديث"),
+              BottomNavigationBarItem(
+                  backgroundColor: Color(0xFFB7935F),
+                  icon: ImageIcon(
+                    AssetImage(
+                      "assets/images/sebha.png",
                     ),
-                    label: "الاحاديث"),
-                BottomNavigationBarItem(
-                    icon: ImageIcon(AssetImage("assets/images/sebha.png")),
-                    label: "التسبيح"),
-                BottomNavigationBarItem(
-                    icon: ImageIcon(AssetImage("assets/images/radio.png")),
-                    label: "الراديو"),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.settings), label: "الاعدادات"),
-              ])),
-    );
+                  ),
+                  label: "التسبيح"),
+              BottomNavigationBarItem(
+                  backgroundColor: Color(0xFFB7935F),
+                  icon: ImageIcon(AssetImage("assets/images/radio.png")),
+                  label: "الراديو"),
+              BottomNavigationBarItem(
+                  backgroundColor: Color(0xFFB7935F),
+                  icon: Icon(Icons.settings),
+                  label: "الاعدادات"),
+            ]),
+        body: screens[index],
+      ),
+    ]);
   }
 }
