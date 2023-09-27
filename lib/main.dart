@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:islami_app/core/theme/app_theme.dart';
+import 'package:islami_app/hades/hadeth_details.dart';
 import 'package:islami_app/layout/home_layout.dart';
 import 'package:islami_app/modules/splashscreen.dart';
 import 'package:islami_app/quran/widget/quran_details.dart';
@@ -21,7 +22,8 @@ class MyApplication extends StatelessWidget {
         routes: {
           SplashScreen.routeName: (context) => const SplashScreen(),
           HomeLayout.routeName: (context) => HomeLayout(),
-          QuranDetails.routeName: (context) => const QuranDetails()
+          QuranDetails.routName: (context) => QuranDetails(),
+          HadethDetails.routName: (context) => HadethDetails()
         });
   }
 }
