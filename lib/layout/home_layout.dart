@@ -17,7 +17,7 @@ class _HomeLayout extends State<HomeLayout> {
   List<Widget> screens = [
     Quran(),
     HadethView(),
-    TasbehView(),
+    Sebha(),
     RadioView(),
     SettingView(),
   ];
