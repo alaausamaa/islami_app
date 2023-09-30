@@ -7,74 +7,71 @@ import 'package:islami_app/setting/setting_view.dart';
 import 'package:islami_app/tasbeh/tasbeh_view.dart';
 
 class HomeLayout extends StatefulWidget {
-  static const String routeName = "home_layout";
+  HomeLayout({super.key});
+
+  static const String routeName = "Home_Layout";
 
   @override
-  State<StatefulWidget> createState() => _HomeLayout();
+  State<HomeLayout> createState() => _HomeLayoutState();
 }
 
-class _HomeLayout extends State<HomeLayout> {
+class _HomeLayoutState extends State<HomeLayout> {
+  int selectedIndex = 0;
   List<Widget> screens = [
-    Quran(),
+    Quran_view(),
     HadethView(),
     Sebha(),
     RadioView(),
-    SettingView(),
+    SettingView()
   ];
-
-  int index = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Stack(children: [
-      Image.asset(
-        "assets/images/bg3.png",
-        width: double.infinity,
-        fit: BoxFit.cover,
-      ),
-      Scaffold(
-        backgroundColor: Colors.transparent,
+    return Container(
+      decoration: const BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage("assets/images/bg3.png"), fit: BoxFit.cover)),
+      child: Scaffold(
         appBar: AppBar(
           title: Text(AppLocalizations.of(context)!.islami),
         ),
+        body: screens[selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
-            currentIndex: index,
-            onTap: (value) {
-              index = value;
-              setState(() {});
-            },
-            backgroundColor: Color(0xFFB7935F),
-            items: [
-              BottomNavigationBarItem(
-                backgroundColor: Color(0xFFB7935F),
-                icon: ImageIcon(AssetImage("assets/images/moshaf.png")),
+          backgroundColor: Color(0xFFB7935F),
+          onTap: (int index) {
+            setState(() {
+              selectedIndex = index;
+            });
+          },
+          currentIndex: selectedIndex,
+          items: [
+            BottomNavigationBarItem(
+                icon: ImageIcon(AssetImage(
+                  "assets/images/moshaf.png",
+                )),
                 label: AppLocalizations.of(context)!.quran,
-              ),
-              BottomNavigationBarItem(
-                  backgroundColor: Color(0xFFB7935F),
-                  icon: ImageIcon(
-                    AssetImage("assets/images/quran.png"),
-                  ),
-                  label: AppLocalizations.of(context)!.hadeth),
-              BottomNavigationBarItem(
-                  backgroundColor: Color(0xFFB7935F),
-                  icon: ImageIcon(
-                    AssetImage(
-                      "assets/images/sebha.png",
-                    ),
-                  ),
-                  label: AppLocalizations.of(context)!.tasbeh),
-              BottomNavigationBarItem(
-                  backgroundColor: Color(0xFFB7935F),
-                  icon: ImageIcon(AssetImage("assets/images/radio.png")),
-                  label: AppLocalizations.of(context)!.radio),
-              BottomNavigationBarItem(
-                  backgroundColor: Color(0xFFB7935F),
-                  icon: Icon(Icons.settings),
-                  label: AppLocalizations.of(context)!.setting),
-            ]),
-        body: screens[index],
+                backgroundColor: Color(0xFFB7935F)),
+            BottomNavigationBarItem(
+                icon: ImageIcon(AssetImage("assets/images/quran.png")),
+                label: AppLocalizations.of(context)!.hadeth,
+                backgroundColor: Color(0xFFB7935F)),
+            BottomNavigationBarItem(
+                icon: ImageIcon(AssetImage("assets/images/sebha.png")),
+                label: AppLocalizations.of(context)!.tasbeh,
+                backgroundColor: Color(0xFFB7935F)),
+            BottomNavigationBarItem(
+                icon: ImageIcon(AssetImage("assets/images/radio.png")),
+                label: AppLocalizations.of(context)!.radio,
+                backgroundColor: Color(0xFFB7935F)),
+            BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.settings,
+                ),
+                label: AppLocalizations.of(context)!.setting,
+                backgroundColor: Color(0xFFB7935F)),
+          ],
+        ),
       ),
-    ]);
+    );
   }
 }

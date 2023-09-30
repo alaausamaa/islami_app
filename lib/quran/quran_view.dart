@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:islami_app/provider/provider.dart';
 import 'package:islami_app/quran/widget/quran_details.dart';
 import 'package:islami_app/quran/widget/quran_item.dart';
-class Quran extends StatelessWidget {
-  Quran({super.key});
+import 'package:provider/provider.dart';
+
+class Quran_view extends StatelessWidget {
+  Quran_view({super.key});
 
   List<String> suraNames = [
     "الفاتحه",
@@ -124,6 +127,7 @@ class Quran extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+    var appProvider = Provider.of<AppProvider>(context);
     return Column(
       children: [
         Image.asset(

@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class SettingView extends StatelessWidget {
+import '../bottom _sheets/show_language_bottom_sheet.dart';
+
+class SettingView extends StatefulWidget {
   const SettingView({super.key});
 
+  @override
+  State<SettingView> createState() => _SettingViewState();
+}
+
+class _SettingViewState extends State<SettingView> {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -13,7 +21,7 @@ class SettingView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            "Language",
+            AppLocalizations.of(context)!.language,
             textAlign: TextAlign.start,
             style: theme.textTheme.bodyLarge,
           ),
@@ -22,7 +30,7 @@ class SettingView extends StatelessWidget {
               showLanguageBottomSheet(context);
             },
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 16),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               margin: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
               height: 70,
               width: mediaQuery.width,
@@ -42,16 +50,16 @@ class SettingView extends StatelessWidget {
             height: 40,
           ),
           Text(
-            "Theme Mode",
+            AppLocalizations.of(context)!.theme_mode,
             textAlign: TextAlign.start,
             style: theme.textTheme.bodyLarge,
           ),
           GestureDetector(
             onTap: () {
-              showLanguageBottomSheet(context);
+              showThemeBottomSheet();
             },
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 16),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               margin: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
               height: 70,
               width: mediaQuery.width,
@@ -73,6 +81,28 @@ class SettingView extends StatelessWidget {
   }
 
   void showLanguageBottomSheet(context) {
-    showModalBottomSheet(context: context, builder: (context) => Container());
+    showModalBottomSheet(
+        context: context,
+        shape: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.transparent),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(18),
+              topRight: Radius.circular(18),
+            )),
+        builder: (context) => LanguageBottomSheet());
+  }
+
+  void showThemeBottomSheet() {
+    showModalBottomSheet(
+        context: context,
+        shape: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.transparent),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(18),
+              topRight: Radius.circular(18),
+            )),
+        builder: (context) => Container(
+              height: MediaQuery.of(context).size.height * .8,
+            ));
   }
 }
