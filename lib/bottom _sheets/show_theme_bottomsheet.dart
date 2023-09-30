@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:islami_app/provider/provider.dart';
 import 'package:provider/provider.dart';
 
-import '../provider/provider.dart';
-
-class LanguageBottomSheet extends StatelessWidget {
-  const LanguageBottomSheet({super.key});
+class ThemeBottomSheet extends StatelessWidget {
+  const ThemeBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +18,7 @@ class LanguageBottomSheet extends StatelessWidget {
           children: [
             InkWell(
               onTap: () {
-                provider.changeLanguage("en");
+                provider.changeTheme(ThemeMode.light);
                 Navigator.pop(context);
               },
               child: Container(
@@ -33,12 +32,12 @@ class LanguageBottomSheet extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(AppLocalizations.of(context)!.english,
+                    Text(AppLocalizations.of(context)!.light,
                         style: theme.textTheme.bodyLarge!.copyWith(
-                            color: provider.local == "en"
+                            color: provider.currenttheme == ThemeMode.light
                                 ? Colors.white
                                 : Colors.black)),
-                    provider.local == "en"
+                    provider.currenttheme == ThemeMode.light
                         ? Icon(
                             Icons.done,
                             color: Colors.white,
@@ -51,7 +50,7 @@ class LanguageBottomSheet extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                provider.changeLanguage("ar");
+                provider.changeTheme(ThemeMode.dark);
                 Navigator.pop(context);
               },
               child: Container(
@@ -65,12 +64,12 @@ class LanguageBottomSheet extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(AppLocalizations.of(context)!.arabic,
+                    Text(AppLocalizations.of(context)!.dark,
                         style: theme.textTheme.bodyMedium!.copyWith(
-                            color: provider.local == "ar"
+                            color: provider.currenttheme == ThemeMode.dark
                                 ? Colors.white
                                 : Colors.black)),
-                    provider.local == "ar"
+                    provider.currenttheme == ThemeMode.dark
                         ? Icon(
                             Icons.done,
                             color: Colors.white,

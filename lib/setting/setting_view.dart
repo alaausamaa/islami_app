@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:islami_app/bottom%20_sheets/show_theme_bottomsheet.dart';
+import 'package:islami_app/provider/provider.dart';
+import 'package:provider/provider.dart';
 
 import '../bottom _sheets/show_language_bottom_sheet.dart';
 
@@ -15,6 +18,7 @@ class _SettingViewState extends State<SettingView> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var mediaQuery = MediaQuery.of(context).size;
+    var provider = Provider.of<AppProvider>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
       child: Column(
@@ -30,19 +34,25 @@ class _SettingViewState extends State<SettingView> {
               showLanguageBottomSheet(context);
             },
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 16),
               margin: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
               height: 70,
               width: mediaQuery.width,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(
-                    color: theme.primaryColor,
+                    color: theme.colorScheme.secondary,
                     width: 2.2,
                   )),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [Text("English"), Icon(Icons.arrow_drop_down_sharp)],
+                children: [
+                  Text(provider.local == "en" ? "English" : "عربي"),
+                  Icon(
+                    Icons.arrow_drop_down_sharp,
+                    color: theme.colorScheme.secondary,
+                  )
+                ],
               ),
             ),
           ),
@@ -59,19 +69,34 @@ class _SettingViewState extends State<SettingView> {
               showThemeBottomSheet();
             },
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 16),
               margin: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
               height: 70,
               width: mediaQuery.width,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(
-                    color: theme.primaryColor,
+                    color: theme.colorScheme.secondary,
                     width: 2.2,
                   )),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [Text("Dark"), Icon(Icons.arrow_drop_down_sharp)],
+                children: [
+                  Text(provider.currenttheme == ThemeMode.dark &&
+                          provider.local == "en"
+                      ? "Dark"
+                      : provider.currenttheme == ThemeMode.light &&
+                              provider.local == "en"
+                          ? "Light"
+                          : provider.currenttheme == ThemeMode.dark &&
+                                  provider.local == "ar"
+                              ? "ليلي"
+                              : "نهاري"),
+                  Icon(
+                    Icons.arrow_drop_down_sharp,
+                    color: theme.colorScheme.secondary,
+                  )
+                ],
               ),
             ),
           )
@@ -101,8 +126,6 @@ class _SettingViewState extends State<SettingView> {
               topLeft: Radius.circular(18),
               topRight: Radius.circular(18),
             )),
-        builder: (context) => Container(
-              height: MediaQuery.of(context).size.height * .8,
-            ));
+        builder: (context) => ThemeBottomSheet());
   }
 }

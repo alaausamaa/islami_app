@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:islami_app/provider/provider.dart';
+import 'package:provider/provider.dart';
 
 import '../quran_view.dart';
 
@@ -15,18 +17,18 @@ class QuranDetails extends StatefulWidget {
 class _QuranDetailsState extends State<QuranDetails> {
   String content = "";
   List<String> lines = [];
-
   @override
   Widget build(BuildContext context) {
     var madiaquery = MediaQuery.of(context).size;
     var theme = Theme.of(context);
     var arg = ModalRoute.of(context)?.settings.arguments as SuraDetail;
+    var detail = Provider.of<AppProvider>(context);
     // asynchronous
-    if (content.isEmpty) readFiles(arg.surenumber);
+    if (content.isEmpty) readFiles(arg.suranumber);
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage("assets/images/bg3.png"), fit: BoxFit.cover)),
+              image: AssetImage(detail.Background()), fit: BoxFit.cover)),
       child: Scaffold(
         appBar: AppBar(
             title: Text(
@@ -39,51 +41,51 @@ class _QuranDetailsState extends State<QuranDetails> {
           width: madiaquery.width,
           height: madiaquery.height,
           decoration: BoxDecoration(
-            color: Color(0xFFF8F8F8).withOpacity(0.8),
+            color: theme.colorScheme.primary.withOpacity(0.8),
             borderRadius: BorderRadius.circular(25),
           ),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "  سورة${arg.suraname}",
-                    style: theme.textTheme.bodyLarge,
-                  ),
-                  SizedBox(
-                    width: 4,
-                  ),
-                  Icon(
-                    Icons.play_circle,
-                    size: 32,
-                    color: Colors.black,
-                  )
-                ],
-              ),
-              Divider(
-                color: theme.primaryColor,
-                indent: 30,
-                endIndent: 30,
-                thickness: 1.2,
-                height: 5,
-              ),
-              Expanded(
-                child: ListView.builder(
-                  itemBuilder: (context, index) => Text(
-                    content,
-                    textAlign: TextAlign.center,
-                    style: theme.textTheme.bodySmall,
-                  ),
+          child: Column(children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "  سورة${arg.suraname}",
+                  style: theme.textTheme.bodyLarge!
+                      .copyWith(color: theme.colorScheme.onPrimary),
                 ),
-              )
-            ],
-          ),
+                SizedBox(
+                  width: 4,
+                ),
+                Icon(
+                  Icons.play_circle,
+                  size: 32,
+                  color: theme.colorScheme.onPrimary,
+                )
+              ],
+            ),
+            Divider(
+              color: theme.colorScheme.onSecondary,
+              indent: 30,
+              endIndent: 30,
+              thickness: 1.2,
+              height: 5,
+            ),
+            Expanded(
+              child: ListView(children: [
+                Text(
+                  //  "${lines[index]} (${index+1})",
+                  content,
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.bodySmall!.copyWith(
+                      color: theme.colorScheme.onPrimary, height: 1.5),
+                ),
+              ]),
+            )
+          ]),
         ),
       ),
     );
   }
-
   readFiles(String index) async {
     String text = await rootBundle.loadString("assets/files/$index.txt");
     content = text;

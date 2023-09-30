@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:islami_app/provider/provider.dart';
 import 'package:islami_app/quran/widget/quran_details.dart';
 import 'package:islami_app/quran/widget/quran_item.dart';
-import 'package:provider/provider.dart';
 
 class Quran_view extends StatelessWidget {
   Quran_view({super.key});
-
   List<String> suraNames = [
     "الفاتحه",
     "البقرة",
@@ -123,11 +120,9 @@ class Quran_view extends StatelessWidget {
     "الفلق",
     "الناس"
   ];
-
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    var appProvider = Provider.of<AppProvider>(context);
     return Column(
       children: [
         Image.asset(
@@ -136,7 +131,7 @@ class Quran_view extends StatelessWidget {
         ),
         Divider(
           thickness: 1.2,
-          color: theme.primaryColor,
+          color: theme.colorScheme.secondary,
           indent: 10,
           endIndent: 10,
           height: 5,
@@ -152,7 +147,7 @@ class Quran_view extends StatelessWidget {
             Container(
               width: 1.2,
               height: 45,
-              color: theme.primaryColor,
+              color: theme.colorScheme.secondary,
             ),
             Expanded(
                 child: Text(
@@ -164,7 +159,7 @@ class Quran_view extends StatelessWidget {
         ),
         Divider(
           thickness: 1.2,
-          color: theme.primaryColor,
+          color: theme.colorScheme.secondary,
           indent: 10,
           endIndent: 10,
           height: 5,
@@ -176,7 +171,7 @@ class Quran_view extends StatelessWidget {
                 Navigator.pushNamed(context, QuranDetails.routName,
                     arguments: SuraDetail(
                         suraname: suraNames[index],
-                        surenumber: "${index + 1}"));
+                        suranumber: "${index + 1}"));
               },
               child: QuarnItem(
                 suraName: suraNames[index],
@@ -190,10 +185,9 @@ class Quran_view extends StatelessWidget {
     );
   }
 }
-
 class SuraDetail {
   final String suraname;
-  final String surenumber;
+  final String suranumber;
 
-  SuraDetail({required this.suraname, required this.surenumber});
+  SuraDetail({required this.suraname, required this.suranumber});
 }
