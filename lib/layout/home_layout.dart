@@ -1,61 +1,80 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:islami_app/hades/hadeth_view.dart';
 import 'package:islami_app/quran/quran_view.dart';
 import 'package:islami_app/radio/radio_view.dart';
 import 'package:islami_app/setting/setting_view.dart';
 import 'package:islami_app/tasbeh/tasbeh_view.dart';
 
-class HomeLayout extends StatelessWidget {
+class HomeLayout extends StatefulWidget {
   static const String routeName = "home_layout";
 
-  int selectedIndex = 0;
+  @override
+  State<StatefulWidget> createState() => _HomeLayout();
+}
 
+class _HomeLayout extends State<HomeLayout> {
   List<Widget> screens = [
-    QuranView(),
+    Quran(),
     HadethView(),
-    TasbehView(),
+    Sebha(),
     RadioView(),
     SettingView(),
   ];
 
-  HomeLayout({super.key});
+  int index = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(
-                "assets/images/bg3.png",
+    return Stack(children: [
+      Image.asset(
+        "assets/images/bg3.png",
+        width: double.infinity,
+        fit: BoxFit.cover,
+      ),
+      Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          title: Text(AppLocalizations.of(context)!.islami),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+            currentIndex: index,
+            onTap: (value) {
+              index = value;
+              setState(() {});
+            },
+            backgroundColor: Color(0xFFB7935F),
+            items: [
+              BottomNavigationBarItem(
+                backgroundColor: Color(0xFFB7935F),
+                icon: ImageIcon(AssetImage("assets/images/moshaf.png")),
+                label: AppLocalizations.of(context)!.quran,
               ),
-              fit: BoxFit.cover)),
-      child: Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(title: const Text("اسلامي")),
-          body: screens[selectedIndex],
-          bottomNavigationBar: BottomNavigationBar(
-              onTap: (int index) {
-                selectedIndex = index;
-              },
-              currentIndex: selectedIndex,
-              items: const [
-                BottomNavigationBarItem(
-                    icon: ImageIcon(AssetImage("assets/images/moshaf.png")),
-                    label: "القران"),
-                BottomNavigationBarItem(
-                    icon: ImageIcon(
-                      AssetImage("assets/images/quran.png"),
+              BottomNavigationBarItem(
+                  backgroundColor: Color(0xFFB7935F),
+                  icon: ImageIcon(
+                    AssetImage("assets/images/quran.png"),
+                  ),
+                  label: AppLocalizations.of(context)!.hadeth),
+              BottomNavigationBarItem(
+                  backgroundColor: Color(0xFFB7935F),
+                  icon: ImageIcon(
+                    AssetImage(
+                      "assets/images/sebha.png",
                     ),
-                    label: "الاحاديث"),
-                BottomNavigationBarItem(
-                    icon: ImageIcon(AssetImage("assets/images/sebha.png")),
-                    label: "التسبيح"),
-                BottomNavigationBarItem(
-                    icon: ImageIcon(AssetImage("assets/images/radio.png")),
-                    label: "الراديو"),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.settings), label: "الاعدادات"),
-              ])),
-    );
+                  ),
+                  label: AppLocalizations.of(context)!.tasbeh),
+              BottomNavigationBarItem(
+                  backgroundColor: Color(0xFFB7935F),
+                  icon: ImageIcon(AssetImage("assets/images/radio.png")),
+                  label: AppLocalizations.of(context)!.radio),
+              BottomNavigationBarItem(
+                  backgroundColor: Color(0xFFB7935F),
+                  icon: Icon(Icons.settings),
+                  label: AppLocalizations.of(context)!.setting),
+            ]),
+        body: screens[index],
+      ),
+    ]);
   }
 }
